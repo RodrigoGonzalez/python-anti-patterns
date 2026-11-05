@@ -34,15 +34,9 @@ to produce the supposed return value it is better to raise an exception that can
 
 def filter_for_foo(l):
     r = [e for e in l if e.find("foo") != -1]
-    if not check_some_critical_condition(r):
-        return None
-    return r
+    return None if not check_some_critical_condition(r) else r
 
 res = filter_for_foo(["bar","foo","faz"])
-
-if res is not None:
-    #continue processing
-    pass
 
 #Good
 
@@ -329,12 +323,8 @@ x,y = y+2,x-4
 Not using 'with' to open files
 """
 
-#Bad
-
-f = open("file.txt","r")
-content = f.read()
-f.close()
-
+with open("file.txt","r") as f:
+    content = f.read()
 #Good
 
 with open("file.txt","r") as input_file:
@@ -382,7 +372,7 @@ Using string concatenation instead of formatting
 
 n_errors = 10
 
-s = "there were "+str(n_errors)+" errors."
+s = f"there were {n_errors} errors."
 
 #Good
 
